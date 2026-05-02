@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Panel Admin</title>
+
+  <!-- TU CSS -->
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+
+<body>
+
+<header>
+  <h1>Panel de Administrador</h1>
+</header>
+
+<section class="section">
+  <h2>Bienvenido Admin 👑</h2>
+  <p>Tienes acceso completo al sistema</p>
+
+  <button onclick="cerrarSesion()">Cerrar sesión</button>
+</section>
+
+<script>
+  // 🔐 PROTEGER ACCESO
+  const usuario = JSON.parse(localStorage.getItem("usuario"));
+
+  if (!usuario || usuario.rol !== "admin") {
+    alert("No tienes acceso");
+    window.location.href = "index.html";
+  }
+
+  // 🔓 CERRAR SESIÓN
+  function cerrarSesion() {
+    localStorage.removeItem("usuario");
+    window.location.href = "index.html";
+  }
+</script>
+
+</body>
+</html>

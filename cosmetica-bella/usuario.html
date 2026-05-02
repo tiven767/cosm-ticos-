@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Agendar Cita</title>
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+<div class="btn-agendar">
+<a href="agendar.html">
+  <button>Agendar Cita</button>
+</a>
+</div>
+<body>
+
+<header>
+  <h1>Agendar Cita 💅</h1>
+</header>
+
+<section class="agenda-panel">
+
+  <h2>Reserva tu servicio</h2>
+
+  <form onsubmit="agendar(event)">
+
+    <label>Servicio:</label>
+    <select id="servicio" required>
+      <option value="">Seleccione</option>
+      <option>Cejas</option>
+      <option>Labios</option>
+      <option>Masajes</option>
+      <option>Pestañas</option>
+    </select>
+
+    <label>Fecha:</label>
+    <input type="date" id="fecha" required>
+
+    <label>Hora:</label>
+    <input type="time" id="hora" required>
+
+    <button type="submit">Agendar</button>
+  </form>
+
+  <button onclick="cerrarSesion()">Cerrar sesión</button>
+
+</section>
+
+<script>
+  const usuario = JSON.parse(localStorage.getItem("usuario"));
+
+  if (!usuario) {
+    window.location.href = "index.html";
+  }
+
+  function agendar(e) {
+    e.preventDefault();
+
+    const servicio = document.getElementById("servicio").value;
+    const fecha = document.getElementById("fecha").value;
+    const hora = document.getElementById("hora").value;
+
+    const cita = {
+      usuario: usuario.usuario,
+      servicio,
+      fecha,
+      hora
+    };
+
+    // Guardar en localStorage
+    let citas = JSON.parse(localStorage.getItem("citas")) || [];
+    citas.push(cita);
+    localStorage.setItem("citas", JSON.stringify(citas));
+
+    alert("Cita agendada correctamente ✅");
+  }
+
+  function cerrarSesion() {
+    localStorage.removeItem("usuario");
+    window.location.href = "index.html";
+  }
+</script>
+
+
+<section class="usuario-panel">
+
+  <h2>Servicios disponibles</h2>
+
+  <div class="servicios">
+    <!-- tus cards -->
+  </div>
+
+  <!-- 👇 ESTE -->
+  <a href="agendar.html">
+    <button>Agendar Cita</button>
+  </a>
+
+</section>
+
+
+
+
+
+</body>
+</html>

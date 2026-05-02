@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Agendar Cita</title>
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+<a href="agendar.html"></a>
+<body>
+
+<header>
+  <h1>Agendar Cita 💅</h1>
+</header>
+
+<section class="agenda-panel">
+
+  <h2>Reserva tu servicio</h2>
+
+  <form onsubmit="agendar(event)">
+
+    <label>Servicio:</label>
+    <select id="servicio" required>
+      <option value="">Seleccione un servicio</option>
+      <option>Cejas</option>
+      <option>Labios</option>
+      <option>Masajes</option>
+      <option>Pestañas</option>
+      <option>Suero</option>
+      <option>Terapias</option>
+    </select>
+
+    <label>Fecha:</label>
+    <input type="date" id="fecha" required>
+
+    <label>Hora:</label>
+    <input type="time" id="hora" required>
+
+    <button type="submit">Agendar Cita</button>
+
+  </form>
+
+  <button onclick="cerrarSesion()">Cerrar sesión</button>
+
+</section>
+
+<script>
+  // 🔐 Verificar login
+  const usuario = JSON.parse(localStorage.getItem("usuario"));
+
+  if (!usuario) {
+    alert("Debes iniciar sesión");
+    window.location.href = "index.html";
+  }
+
+  // 📅 Guardar cita
+  function agendar(e) {
+    e.preventDefault();
+
+    const servicio = document.getElementById("servicio").value;
+    const fecha = document.getElementById("fecha").value;
+    const hora = document.getElementById("hora").value;
+
+    const cita = {
+      usuario: usuario.usuario,
+      servicio: servicio,
+      fecha: fecha,
+      hora: hora
+    };
+
+    let citas = JSON.parse(localStorage.getItem("citas")) || [];
+    citas.push(cita);
+
+    localStorage.setItem("citas", JSON.stringify(citas));
+
+    alert("✅ Cita agendada correctamente");
+
+    // limpiar formulario
+    document.querySelector("form").reset();
+  }
+
+  // 🔓 cerrar sesión
+  function cerrarSesion() {
+    localStorage.removeItem("usuario");
+    window.location.href = "index.html";
+  }
+</script>
+
+</body>
+</html>
